@@ -1,0 +1,6 @@
+{
+  "name": "KALE.exe — A Little Reminder For You",
+  "description": "A nostalgic transparent Nokia digital gift experience dedicated to Kale, featuring encouraging reminders, comforting SMS, self-love mode, a personal letter, and a gentle music player.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

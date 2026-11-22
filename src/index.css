@@ -1,0 +1,151 @@
+@import "tailwindcss";
+
+:root {
+  --bg-ivory: #f7f5f0;
+  --ink-primary: #272623;
+  --ink-muted: #6f6c64;
+  --accent-orange: #df7442;
+  --lcd-bg-lit: #97ad88;
+  --lcd-bg-off: #6d776a;
+  --lcd-ink: #1a2417;
+  --lcd-ink-soft: #31422c;
+}
+
+@layer base {
+  html,
+  body {
+    background-color: var(--bg-ivory);
+    color: var(--ink-primary);
+    font-family: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+}
+
+.font-mono-label {
+  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+.font-pixel-display {
+  font-family: "Silkscreen", ui-monospace, monospace;
+}
+
+.font-pixel-body {
+  font-family: "VT323", ui-monospace, monospace;
+}
+
+/* Subtle photographic film grain */
+.film-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+}
+
+/* Monochrome Nokia LCD scanlines & sub-pixel matrix */
+.lcd-matrix {
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(26, 36, 23, 0.055) 50%,
+      rgba(255, 255, 255, 0.025) 50%
+    ),
+    linear-gradient(
+      to right,
+      rgba(26, 36, 23, 0.035) 50%,
+      transparent 50%
+    );
+  background-size: 100% 3px, 3px 100%;
+}
+
+/* Custom slim monochrome scrollbar inside LCD */
+.lcd-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.lcd-scroll::-webkit-scrollbar-track {
+  background: rgba(26, 36, 23, 0.1);
+}
+
+.lcd-scroll::-webkit-scrollbar-thumb {
+  background: rgba(26, 36, 23, 0.45);
+}
+
+/* Phone subtle vibration when coin enters */
+@keyframes phone-vibrate {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+  15% { transform: translate3d(-2px, 1px, 0) rotate(-0.4deg); }
+  30% { transform: translate3d(2px, -1px, 0) rotate(0.4deg); }
+  45% { transform: translate3d(-2px, -1px, 0) rotate(-0.3deg); }
+  60% { transform: translate3d(2px, 1px, 0) rotate(0.3deg); }
+  75% { transform: translate3d(-1px, 1px, 0) rotate(-0.2deg); }
+}
+
+.animate-phone-vibrate {
+  animation: phone-vibrate 0.42s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* LCD flicker for secret message unlock */
+@keyframes lcd-flicker {
+  0% { opacity: 1; filter: brightness(1); }
+  15% { opacity: 0.35; filter: brightness(1.3); }
+  30% { opacity: 0.95; filter: brightness(0.85); }
+  45% { opacity: 0.25; filter: brightness(1.4); }
+  65% { opacity: 0.9; filter: brightness(1); }
+  80% { opacity: 0.5; filter: brightness(1.2); }
+  100% { opacity: 1; filter: brightness(1); }
+}
+
+.animate-lcd-flicker {
+  animation: lcd-flicker 0.55s ease-in-out both;
+}
+
+/* Blinking pixel cursor */
+@keyframes pixel-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.animate-pixel-blink {
+  animation: pixel-blink 0.9s steps(1, end) infinite;
+}
+
+/* Coin gentle idle float */
+@keyframes coin-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+}
+
+.animate-coin-float {
+  animation: coin-float 3s ease-in-out infinite;
+}
+
+/* Coin spin into slot */
+@keyframes coin-drop-in {
+  0% {
+    transform: translateY(0) scale(1) rotateY(0deg);
+    opacity: 1;
+  }
+  45% {
+    transform: translateY(-6px) scale(0.92) rotateY(180deg);
+    opacity: 1;
+  }
+  85% {
+    transform: translateY(22px) scale(0.65) rotateY(360deg);
+    opacity: 0.85;
+  }
+  100% {
+    transform: translateY(38px) scale(0.4) rotateY(450deg);
+    opacity: 0;
+  }
+}
+
+.animate-coin-drop {
+  animation: coin-drop-in 0.72s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-phone-vibrate,
+  .animate-lcd-flicker,
+  .animate-coin-float,
+  .animate-coin-drop {
+    animation: none !important;
+  }
+}
